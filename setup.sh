@@ -41,7 +41,6 @@ zighello() {
 }
 #---------- /functions ----------
 zighello
-
-
-
 #---------- start ----------
+python3 -m venv local_env
+source local_env/bin/activate

@@ -41,9 +41,6 @@ zighello() {
 }
 #---------- /functions ----------
 zighello
-
-
-
 #---------- start ----------
 echo -n Put comment:
 if [ "$1" = "" ];then read comment; else comment="$@"; fi
