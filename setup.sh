@@ -45,7 +45,3 @@ zighello
 
 
 #---------- start ----------
-echo -n Put comment:
-if [ "$1" = "" ];then read comment; else comment="$@"; fi
-git commit -a -m "$comment $(date +%F_%H-%M-%S_%N)"
-git push
