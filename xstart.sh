@@ -44,4 +44,4 @@ zighello
 #---------- start ----------
 python3 -m venv local_env
 source local_env/bin/activate
-pip3 install requests
+python3 test.py
