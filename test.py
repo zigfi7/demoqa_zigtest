@@ -16,8 +16,10 @@ def putf(url, data):
 	response = requests.put(url, json=data)
 	return response.text
 
-def posf(url, data):
-	response = requests.post(url, json=data)
+def posf(url, data,token):
+	auth_token = "Bearer %s" % token
+	header = {"Authorization": auth_token}
+	response = requests.post(url, json=data, headers=header)
 	return response.text
 
 def delf(url, data, token):
@@ -44,36 +46,70 @@ print ('')
 login_data = {"userName": xuser,"password": xpass}
 
 echoz ('Chcecking Autorization')
-output = json.loads(posf (urlroot+"/Account/v1/Authorized",login_data))
+output = json.loads(posf (urlroot+"/Account/v1/Authorized",login_data,''))
 echoz (json.dumps(output))  #, sort_keys=True, indent=4
 
 echoz ('Adding user')
-output = json.loads(posf (urlroot+"/Account/v1/User",login_data))
+output = json.loads(posf (urlroot+"/Account/v1/User",login_data,''))
 echoz (json.dumps(output))  
 userID = output["userID"]
 echoz ("We have now user id: "+userID)  
 
 echoz ('Generate Token')
-output = json.loads(posf (urlroot+"/Account/v1/GenerateToken",login_data))
+output = json.loads(posf (urlroot+"/Account/v1/GenerateToken",login_data,''))
 echoz (json.dumps(output))  
 token = output["token"]
 echoz ("We have token: "+token)  
 
 echoz ('Chcecking Autorization')
-output = json.loads(posf (urlroot+"/Account/v1/Authorized",login_data))
+output = json.loads(posf (urlroot+"/Account/v1/Authorized",login_data,token))
 echoz (json.dumps(output))  
 
 echoz ('User chceck ')
 output = json.loads(getf (urlroot+"/Account/v1/User/"+userID,token))
 echoz (json.dumps(output))  
 
+# --------- books --------
+
+echoz ('books chceck ')
+output = json.loads(getf (urlroot+"/BookStore/v1/Books",token))
+echoz (json.dumps(output, sort_keys=True, indent=4))  
+
+isbn=9781491950296
+isbn_data = {"userId": userID, "collectionOfIsbns": [{"isbn": str(isbn)}]}
+echoz ('Add book isbn:' + str(isbn))
+output = json.loads(posf (urlroot+"/BookStore/v1/Books",isbn_data,token))
+echoz (json.dumps(output))  
 
 
+echoz ('User chceck ')
+output = json.loads(getf (urlroot+"/Account/v1/User/"+userID,token))
+echoz (json.dumps(output, sort_keys=True, indent=4))  
+
+isbn=9781593275846
+isbn_data = {"userId": userID, "collectionOfIsbns": [{"isbn": str(isbn)}]}
+echoz ('Add book isbn:' + str(isbn))
+output = json.loads(posf (urlroot+"/BookStore/v1/Books",isbn_data,token))
+echoz (json.dumps(output))  
+
+echoz ('User chceck ')
+output = json.loads(getf (urlroot+"/Account/v1/User/"+userID,token))
+echoz (json.dumps(output, sort_keys=True, indent=4))  
 
 
+echoz ('remove books')
+isbn=9781491950296
+isbn_data = {"userId": userID, "collectionOfIsbns": [{"isbn": str(isbn)}]}
+
+output = delf (urlroot+'/BookStore/v1/Books?UserId='+userID,isbn_data,token)
+echoz (output)
+
+echoz ('User chceck ')
+output = json.loads(getf (urlroot+"/Account/v1/User/"+userID,token))
+echoz (json.dumps(output, sort_keys=True, indent=4))  
 
 
-
+# -------- /books --------
 
 
 echoz ('Deleting user')
@@ -98,6 +134,7 @@ print ('')
 #getf (urlroot+"/BookStore/v1/Books")
 #posf (urlroot+"/BookStore/v1/Books",data)
 #delf (urlroot+"/BookStore/v1/Books")
+
 #getf (urlroot+"/BookStore/v1/Book")
 #delf (urlroot+"/BookStore/v1/Book",data)
 #putf (urlroot+" /BookStore/v1/Books/{ISBN}",data)
