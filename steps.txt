@@ -1,4 +1,7 @@
 1) Create repository on Github, make sure that pushing is working well. https://github.com/zigfi7/demoqa_zigtest
 2) Push a script for simplified pushing ;) (one branch only)
 3) Create python virtual environment venv, for system independency.
+4) Setup file for installing libs.
+5) Functions created to interfrace with bookstore interfrace on https://demoqa.com/
+
 
