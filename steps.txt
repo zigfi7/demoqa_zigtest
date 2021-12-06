@@ -3,5 +3,21 @@
 3) Create python virtual environment venv, for system independency.
 4) Setup file for installing libs.
 5) Functions created to interfrace with bookstore interfrace on https://demoqa.com/
+6) Creating semi-automatic test steps. 
+	a) generate username and password 
+	b) chcek if you can log in (should be false)
+	c) register user
+	d) generate authentication token
+	e) use the token for interacting with a page
+	f) add book
+	g) add another book
+	h) remove books from user
+	i) delete user.
+
+summary:
+Script is interacting wirh a page correctly, but is not immune of response errors and random requests yet.
+Log is generated on console including timestamps, with a second precision, what can be use in error locations.
+
+The next steps will be improve requests, make it more clear regarding to potential issues, and add functionality for books adding and search.
 
 
